@@ -12,30 +12,30 @@ const RULES = [
   {
     type: 'complaint',
     keywords: ['not working', 'broken', 'unacceptable', 'refund', 'disgusting',
-               'terrible', 'no hot water', 'no water', 'no electricity', 'no wifi',
-               'angry', 'disappointed', 'never again', 'want a refund'],
+      'terrible', 'no hot water', 'no water', 'no electricity', 'no wifi',
+      'angry', 'disappointed', 'never again', 'want a refund'],
   },
   {
     type: 'post_sales_checkin',
     keywords: ['check-in', 'check in', 'wifi password', 'wifi', 'arrival time',
-               'check out', 'checkout', 'key', 'access', 'directions'],
+      'check out', 'checkout', 'key', 'access', 'directions'],
   },
   {
     type: 'special_request',
     keywords: ['early check-in', 'late checkout', 'airport transfer', 'chef',
-               'birthday', 'anniversary', 'decoration', 'pickup', 'extra bed'],
+      'birthday', 'anniversary', 'decoration', 'pickup', 'extra bed'],
   },
   {
     type: 'pre_sales_pricing',
     keywords: ['rate', 'price', 'cost', 'how much', 'per night', 'charges',
-               'pricing', 'fee', 'tariff', 'discount', 'offer'],
+      'pricing', 'fee', 'tariff', 'discount', 'offer'],
   },
   {
     type: 'pre_sales_availability',
-    keywords: ['available', 'availability', 'vacant', 'book', 'dates',
-               'nights', 'january', 'february', 'march', 'april', 'may',
-               'june', 'july', 'august', 'september', 'october',
-               'november', 'december', 'free on'],
+    keywords: ['available', 'availability', 'vacant', 'book villa', 'book property', 'book stay', 'dates',
+      'nights', 'january', 'february', 'march', 'april', 'may',
+      'june', 'july', 'august', 'september', 'october',
+      'november', 'december', 'free on'],
   },
   {
     type: 'general_enquiry',
@@ -55,7 +55,7 @@ const COMPILED_RULES = RULES.map(rule => ({
 }));
 
 function classifyMessage(text) {
-  const str = String(text);
+  const str = String(text).normalize('NFKC');
 
   for (const rule of COMPILED_RULES) {
     if (rule.patterns.length === 0) return rule.type; // fallback
@@ -69,7 +69,7 @@ function classifyMessage(text) {
 function countKeywordMatches(text, queryType) {
   const rule = COMPILED_RULES.find(r => r.type === queryType);
   if (!rule || rule.patterns.length === 0) return 0;
-  const str = String(text);
+  const str = String(text).normalize('NFKC');
   return rule.patterns.filter(re => re.test(str)).length;
 }
 
