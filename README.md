@@ -44,7 +44,8 @@ src/
 └── utils.js          ← UUID v4
 tests/
 ├── classifier.test.js
-└── confidence.test.js
+├── confidence.test.js
+└── schema.test.js
 schema.sql            ← Part 2: PostgreSQL schema
 thinking.md           ← Part 3: written answers
 .env.example          ← environment variable template
@@ -88,7 +89,7 @@ curl http://localhost:3000/health
 # → {"status":"ok"}
 
 # Run unit tests (no API key needed)
-npm test
+node --test
 # → 23 tests, all pass
 ```
 
@@ -301,6 +302,7 @@ node --test
 
 - `tests/classifier.test.js` — priority ordering, complaint-first rule, case-insensitivity, word-boundary correctness, match count accuracy, fallback behaviour.
 - `tests/confidence.test.js` — each penalty in isolation, stacking behaviour, complaint cap, action thresholds at the boundary values (0.60 and 0.85).
+- `tests/schemas.test.js` — thorough payload validation covering strict ISO-8601 parsing, length limits, type-checking, and comprehensive multiple-error collection.
 
 Pure functions. No API key or database required.
 
